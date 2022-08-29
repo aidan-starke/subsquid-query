@@ -49,8 +49,9 @@ const Home: NextPage<HomeProps> = ({ dehydratedState }) => {
 					<Block
 						key={block?.id}
 						hash={block?.hash}
-						parentHash={block?.parent_hash}
 						height={block?.height}
+						timestamp={block?.timestamp}
+						parentHash={block?.parent_hash}
 						extrinsicsCount={block?.extrinsics_aggregate?.aggregate?.count}
 					/>
 				))}

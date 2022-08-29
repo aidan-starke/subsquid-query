@@ -3,6 +3,7 @@ query GetBlocks {
 		id
 		hash
 		height
+		timestamp
 		parent_hash
 		extrinsics_aggregate {
 			aggregate {

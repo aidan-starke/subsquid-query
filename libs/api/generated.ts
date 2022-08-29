@@ -2489,6 +2489,7 @@ export type GetBlocksQuery = {
 		id: any;
 		hash: any;
 		height: number;
+		timestamp: any;
 		parent_hash: any;
 		extrinsics_aggregate: {
 			__typename?: "extrinsic_aggregate";
@@ -2584,6 +2585,7 @@ export const GetBlocksDocument = `
     id
     hash
     height
+    timestamp
     parent_hash
     extrinsics_aggregate {
       aggregate {

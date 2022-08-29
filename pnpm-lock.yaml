@@ -13,7 +13,6 @@ specifiers:
   autoprefixer: ^10.4.8
   clsx: ^1.2.1
   date-fns: ^2.29.1
-  date-fns-tz: ^1.3.6
   eslint: 8.21.0
   eslint-config-next: 12.2.3
   ethers: ^5.6.9
@@ -36,7 +35,6 @@ dependencies:
   '@tanstack/react-query': 4.2.3_biqbaboplfbrettd7655fr4n2y
   clsx: 1.2.1
   date-fns: 2.29.2
-  date-fns-tz: 1.3.6_date-fns@2.29.2
   ethers: 5.7.0
   flowbite: 1.5.2
   flowbite-react: 0.1.10_pvr5ndjhcjr6r7xrejarh4djbe
@@ -2678,14 +2676,6 @@ packages:
   /dataloader/2.1.0:
     resolution: {integrity: sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==}
     dev: true
-
-  /date-fns-tz/1.3.6_date-fns@2.29.2:
-    resolution: {integrity: sha512-C8q7mErvG4INw1ZwAFmPlGjEo5Sv4udjKVbTc03zpP9cu6cp5AemFzKhz0V68LGcWEtX5mJudzzg3G04emIxLA==}
-    peerDependencies:
-      date-fns: '>=2.0.0'
-    dependencies:
-      date-fns: 2.29.2
-    dev: false
 
   /date-fns/2.29.2:
     resolution: {integrity: sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==}

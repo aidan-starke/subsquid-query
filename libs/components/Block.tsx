@@ -1,11 +1,13 @@
-import { FC } from "react";
-import { Layout } from "@/libs/components";
 import clsx from "clsx";
+import { FC } from "react";
 import { useTheme } from "@/libs/hooks";
+import { Layout } from "@/libs/components";
+import { getDistance } from "@/libs/utils";
 
 interface BlockProps {
 	hash?: string;
 	height?: number;
+	timestamp?: string;
 	parentHash?: string;
 	extrinsicsCount?: number;
 }
@@ -13,6 +15,7 @@ interface BlockProps {
 export const Block: FC<BlockProps> = ({
 	hash,
 	height,
+	timestamp,
 	parentHash,
 	extrinsicsCount,
 }) => {
@@ -29,7 +32,7 @@ export const Block: FC<BlockProps> = ({
 				>
 					<p className="text-center w-full">Bk</p>
 				</div>
-				<div className="flex items-center">
+				<div>
 					<a
 						className={clsx(
 							"text-blue-600 font-mono text-sm",
@@ -39,6 +42,7 @@ export const Block: FC<BlockProps> = ({
 					>
 						{height}
 					</a>
+					<p className="text-sm">{getDistance(timestamp as string)}</p>
 				</div>
 			</div>
 
