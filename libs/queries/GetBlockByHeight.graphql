@@ -9,6 +9,11 @@ query GetBlockByHeight($height: Int!) {
 				name
 				args
 			}
+			events_aggregate {
+				aggregate {
+					count
+				}
+			}
 		}
 	}
 }
