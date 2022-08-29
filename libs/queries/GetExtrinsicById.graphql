@@ -1,0 +1,15 @@
+query GetExtrinsicById($id: bpchar!) {
+	extrinsic_by_pk(id: $id) {
+		id
+		hash
+		calls {
+			id
+			name
+			args
+		}
+		events {
+			id
+			name
+		}
+	}
+}

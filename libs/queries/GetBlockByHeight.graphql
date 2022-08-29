@@ -1,0 +1,14 @@
+query GetBlockByHeight($height: Int!) {
+	block(order_by: { timestamp: desc }, where: { height: { _eq: $height } }) {
+		hash
+		extrinsics {
+			id
+			hash
+			calls {
+				id
+				name
+				args
+			}
+		}
+	}
+}

@@ -1,0 +1,3971 @@
+schema {
+	query: query_root
+	mutation: mutation_root
+	subscription: subscription_root
+}
+
+"""
+whether this query should be cached (Hasura Cloud only)
+"""
+directive @cached(
+	"""
+	measured in seconds
+	"""
+	ttl: Int! = 60
+
+	"""
+	refresh the cache entry
+	"""
+	refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+	_eq: Boolean
+	_gt: Boolean
+	_gte: Boolean
+	_in: [Boolean!]
+	_is_null: Boolean
+	_lt: Boolean
+	_lte: Boolean
+	_neq: Boolean
+	_nin: [Boolean!]
+}
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+	_eq: Int
+	_gt: Int
+	_gte: Int
+	_in: [Int!]
+	_is_null: Boolean
+	_lt: Int
+	_lte: Int
+	_neq: Int
+	_nin: [Int!]
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+	_eq: String
+	_gt: String
+	_gte: String
+
+	"""
+	does the column match the given case-insensitive pattern
+	"""
+	_ilike: String
+	_in: [String!]
+
+	"""
+	does the column match the given POSIX regular expression, case insensitive
+	"""
+	_iregex: String
+	_is_null: Boolean
+
+	"""
+	does the column match the given pattern
+	"""
+	_like: String
+	_lt: String
+	_lte: String
+	_neq: String
+
+	"""
+	does the column NOT match the given case-insensitive pattern
+	"""
+	_nilike: String
+	_nin: [String!]
+
+	"""
+	does the column NOT match the given POSIX regular expression, case insensitive
+	"""
+	_niregex: String
+
+	"""
+	does the column NOT match the given pattern
+	"""
+	_nlike: String
+
+	"""
+	does the column NOT match the given POSIX regular expression, case sensitive
+	"""
+	_nregex: String
+
+	"""
+	does the column NOT match the given SQL regular expression
+	"""
+	_nsimilar: String
+
+	"""
+	does the column match the given POSIX regular expression, case sensitive
+	"""
+	_regex: String
+
+	"""
+	does the column match the given SQL regular expression
+	"""
+	_similar: String
+}
+
+"""
+columns and relationships of "block"
+"""
+type block {
+	"""
+	An array relationship
+	"""
+	calls(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): [call!]!
+
+	"""
+	An aggregate relationship
+	"""
+	calls_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): call_aggregate!
+
+	"""
+	An array relationship
+	"""
+	events(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): [event!]!
+
+	"""
+	An aggregate relationship
+	"""
+	events_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): event_aggregate!
+
+	"""
+	An array relationship
+	"""
+	extrinsics(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [extrinsic_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [extrinsic_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: extrinsic_bool_exp
+	): [extrinsic!]!
+
+	"""
+	An aggregate relationship
+	"""
+	extrinsics_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [extrinsic_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [extrinsic_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: extrinsic_bool_exp
+	): extrinsic_aggregate!
+	extrinsics_root: bpchar!
+	hash: bpchar!
+	height: Int!
+	id: bpchar!
+	parent_hash: bpchar!
+	spec_id: String!
+	state_root: bpchar!
+	timestamp: timestamptz!
+	validator: String
+}
+
+"""
+aggregated selection of "block"
+"""
+type block_aggregate {
+	aggregate: block_aggregate_fields
+	nodes: [block!]!
+}
+
+"""
+aggregate fields of "block"
+"""
+type block_aggregate_fields {
+	avg: block_avg_fields
+	count(columns: [block_select_column!], distinct: Boolean): Int!
+	max: block_max_fields
+	min: block_min_fields
+	stddev: block_stddev_fields
+	stddev_pop: block_stddev_pop_fields
+	stddev_samp: block_stddev_samp_fields
+	sum: block_sum_fields
+	var_pop: block_var_pop_fields
+	var_samp: block_var_samp_fields
+	variance: block_variance_fields
+}
+
+"""
+aggregate avg on columns
+"""
+type block_avg_fields {
+	height: Float
+}
+
+"""
+Boolean expression to filter rows from the table "block". All fields are combined with a logical 'AND'.
+"""
+input block_bool_exp {
+	_and: [block_bool_exp!]
+	_not: block_bool_exp
+	_or: [block_bool_exp!]
+	calls: call_bool_exp
+	events: event_bool_exp
+	extrinsics: extrinsic_bool_exp
+	extrinsics_root: bpchar_comparison_exp
+	hash: bpchar_comparison_exp
+	height: Int_comparison_exp
+	id: bpchar_comparison_exp
+	parent_hash: bpchar_comparison_exp
+	spec_id: String_comparison_exp
+	state_root: bpchar_comparison_exp
+	timestamp: timestamptz_comparison_exp
+	validator: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "block"
+"""
+enum block_constraint {
+	"""
+	unique or primary key constraint on columns "id"
+	"""
+	block_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "block"
+"""
+input block_inc_input {
+	height: Int
+}
+
+"""
+input type for inserting data into table "block"
+"""
+input block_insert_input {
+	calls: call_arr_rel_insert_input
+	events: event_arr_rel_insert_input
+	extrinsics: extrinsic_arr_rel_insert_input
+	extrinsics_root: bpchar
+	hash: bpchar
+	height: Int
+	id: bpchar
+	parent_hash: bpchar
+	spec_id: String
+	state_root: bpchar
+	timestamp: timestamptz
+	validator: String
+}
+
+"""
+aggregate max on columns
+"""
+type block_max_fields {
+	extrinsics_root: bpchar
+	hash: bpchar
+	height: Int
+	id: bpchar
+	parent_hash: bpchar
+	spec_id: String
+	state_root: bpchar
+	timestamp: timestamptz
+	validator: String
+}
+
+"""
+aggregate min on columns
+"""
+type block_min_fields {
+	extrinsics_root: bpchar
+	hash: bpchar
+	height: Int
+	id: bpchar
+	parent_hash: bpchar
+	spec_id: String
+	state_root: bpchar
+	timestamp: timestamptz
+	validator: String
+}
+
+"""
+response of any mutation on the table "block"
+"""
+type block_mutation_response {
+	"""
+	number of rows affected by the mutation
+	"""
+	affected_rows: Int!
+
+	"""
+	data from the rows affected by the mutation
+	"""
+	returning: [block!]!
+}
+
+"""
+input type for inserting object relation for remote table "block"
+"""
+input block_obj_rel_insert_input {
+	data: block_insert_input!
+
+	"""
+	upsert condition
+	"""
+	on_conflict: block_on_conflict
+}
+
+"""
+on_conflict condition type for table "block"
+"""
+input block_on_conflict {
+	constraint: block_constraint!
+	update_columns: [block_update_column!]! = []
+	where: block_bool_exp
+}
+
+"""
+Ordering options when selecting data from "block".
+"""
+input block_order_by {
+	calls_aggregate: call_aggregate_order_by
+	events_aggregate: event_aggregate_order_by
+	extrinsics_aggregate: extrinsic_aggregate_order_by
+	extrinsics_root: order_by
+	hash: order_by
+	height: order_by
+	id: order_by
+	parent_hash: order_by
+	spec_id: order_by
+	state_root: order_by
+	timestamp: order_by
+	validator: order_by
+}
+
+"""
+primary key columns input for table: block
+"""
+input block_pk_columns_input {
+	id: bpchar!
+}
+
+"""
+select columns of table "block"
+"""
+enum block_select_column {
+	"""
+	column name
+	"""
+	extrinsics_root
+
+	"""
+	column name
+	"""
+	hash
+
+	"""
+	column name
+	"""
+	height
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	parent_hash
+
+	"""
+	column name
+	"""
+	spec_id
+
+	"""
+	column name
+	"""
+	state_root
+
+	"""
+	column name
+	"""
+	timestamp
+
+	"""
+	column name
+	"""
+	validator
+}
+
+"""
+input type for updating data in table "block"
+"""
+input block_set_input {
+	extrinsics_root: bpchar
+	hash: bpchar
+	height: Int
+	id: bpchar
+	parent_hash: bpchar
+	spec_id: String
+	state_root: bpchar
+	timestamp: timestamptz
+	validator: String
+}
+
+"""
+aggregate stddev on columns
+"""
+type block_stddev_fields {
+	height: Float
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type block_stddev_pop_fields {
+	height: Float
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type block_stddev_samp_fields {
+	height: Float
+}
+
+"""
+aggregate sum on columns
+"""
+type block_sum_fields {
+	height: Int
+}
+
+"""
+update columns of table "block"
+"""
+enum block_update_column {
+	"""
+	column name
+	"""
+	extrinsics_root
+
+	"""
+	column name
+	"""
+	hash
+
+	"""
+	column name
+	"""
+	height
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	parent_hash
+
+	"""
+	column name
+	"""
+	spec_id
+
+	"""
+	column name
+	"""
+	state_root
+
+	"""
+	column name
+	"""
+	timestamp
+
+	"""
+	column name
+	"""
+	validator
+}
+
+input block_updates {
+	"""
+	increments the numeric columns with given value of the filtered values
+	"""
+	_inc: block_inc_input
+
+	"""
+	sets the columns of the filtered rows to the given values
+	"""
+	_set: block_set_input
+	where: block_bool_exp!
+}
+
+"""
+aggregate var_pop on columns
+"""
+type block_var_pop_fields {
+	height: Float
+}
+
+"""
+aggregate var_samp on columns
+"""
+type block_var_samp_fields {
+	height: Float
+}
+
+"""
+aggregate variance on columns
+"""
+type block_variance_fields {
+	height: Float
+}
+
+scalar bpchar
+
+"""
+Boolean expression to compare columns of type "bpchar". All fields are combined with logical 'AND'.
+"""
+input bpchar_comparison_exp {
+	_eq: bpchar
+	_gt: bpchar
+	_gte: bpchar
+
+	"""
+	does the column match the given case-insensitive pattern
+	"""
+	_ilike: bpchar
+	_in: [bpchar!]
+
+	"""
+	does the column match the given POSIX regular expression, case insensitive
+	"""
+	_iregex: bpchar
+	_is_null: Boolean
+
+	"""
+	does the column match the given pattern
+	"""
+	_like: bpchar
+	_lt: bpchar
+	_lte: bpchar
+	_neq: bpchar
+
+	"""
+	does the column NOT match the given case-insensitive pattern
+	"""
+	_nilike: bpchar
+	_nin: [bpchar!]
+
+	"""
+	does the column NOT match the given POSIX regular expression, case insensitive
+	"""
+	_niregex: bpchar
+
+	"""
+	does the column NOT match the given pattern
+	"""
+	_nlike: bpchar
+
+	"""
+	does the column NOT match the given POSIX regular expression, case sensitive
+	"""
+	_nregex: bpchar
+
+	"""
+	does the column NOT match the given SQL regular expression
+	"""
+	_nsimilar: bpchar
+
+	"""
+	does the column match the given POSIX regular expression, case sensitive
+	"""
+	_regex: bpchar
+
+	"""
+	does the column match the given SQL regular expression
+	"""
+	_similar: bpchar
+}
+
+"""
+columns and relationships of "call"
+"""
+type call {
+	args(
+		"""
+		JSON select path
+		"""
+		path: String
+	): jsonb
+
+	"""
+	An object relationship
+	"""
+	block: block!
+	block_id: bpchar!
+
+	"""
+	An object relationship
+	"""
+	call: call
+
+	"""
+	An array relationship
+	"""
+	calls(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): [call!]!
+
+	"""
+	An aggregate relationship
+	"""
+	calls_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): call_aggregate!
+	error(
+		"""
+		JSON select path
+		"""
+		path: String
+	): jsonb
+
+	"""
+	An array relationship
+	"""
+	events(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): [event!]!
+
+	"""
+	An aggregate relationship
+	"""
+	events_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): event_aggregate!
+
+	"""
+	An object relationship
+	"""
+	extrinsic: extrinsic!
+	extrinsic_id: bpchar!
+	id: String!
+	name: String!
+	origin(
+		"""
+		JSON select path
+		"""
+		path: String
+	): jsonb
+	parent_id: String
+	pos: Int!
+	success: Boolean!
+}
+
+"""
+aggregated selection of "call"
+"""
+type call_aggregate {
+	aggregate: call_aggregate_fields
+	nodes: [call!]!
+}
+
+"""
+aggregate fields of "call"
+"""
+type call_aggregate_fields {
+	avg: call_avg_fields
+	count(columns: [call_select_column!], distinct: Boolean): Int!
+	max: call_max_fields
+	min: call_min_fields
+	stddev: call_stddev_fields
+	stddev_pop: call_stddev_pop_fields
+	stddev_samp: call_stddev_samp_fields
+	sum: call_sum_fields
+	var_pop: call_var_pop_fields
+	var_samp: call_var_samp_fields
+	variance: call_variance_fields
+}
+
+"""
+order by aggregate values of table "call"
+"""
+input call_aggregate_order_by {
+	avg: call_avg_order_by
+	count: order_by
+	max: call_max_order_by
+	min: call_min_order_by
+	stddev: call_stddev_order_by
+	stddev_pop: call_stddev_pop_order_by
+	stddev_samp: call_stddev_samp_order_by
+	sum: call_sum_order_by
+	var_pop: call_var_pop_order_by
+	var_samp: call_var_samp_order_by
+	variance: call_variance_order_by
+}
+
+"""
+append existing jsonb value of filtered columns with new jsonb value
+"""
+input call_append_input {
+	args: jsonb
+	error: jsonb
+	origin: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "call"
+"""
+input call_arr_rel_insert_input {
+	data: [call_insert_input!]!
+
+	"""
+	upsert condition
+	"""
+	on_conflict: call_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type call_avg_fields {
+	pos: Float
+}
+
+"""
+order by avg() on columns of table "call"
+"""
+input call_avg_order_by {
+	pos: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "call". All fields are combined with a logical 'AND'.
+"""
+input call_bool_exp {
+	_and: [call_bool_exp!]
+	_not: call_bool_exp
+	_or: [call_bool_exp!]
+	args: jsonb_comparison_exp
+	block: block_bool_exp
+	block_id: bpchar_comparison_exp
+	call: call_bool_exp
+	calls: call_bool_exp
+	error: jsonb_comparison_exp
+	events: event_bool_exp
+	extrinsic: extrinsic_bool_exp
+	extrinsic_id: bpchar_comparison_exp
+	id: String_comparison_exp
+	name: String_comparison_exp
+	origin: jsonb_comparison_exp
+	parent_id: String_comparison_exp
+	pos: Int_comparison_exp
+	success: Boolean_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "call"
+"""
+enum call_constraint {
+	"""
+	unique or primary key constraint on columns "id"
+	"""
+	call_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input call_delete_at_path_input {
+	args: [String!]
+	error: [String!]
+	origin: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input call_delete_elem_input {
+	args: Int
+	error: Int
+	origin: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input call_delete_key_input {
+	args: String
+	error: String
+	origin: String
+}
+
+"""
+input type for incrementing numeric columns in table "call"
+"""
+input call_inc_input {
+	pos: Int
+}
+
+"""
+input type for inserting data into table "call"
+"""
+input call_insert_input {
+	args: jsonb
+	block: block_obj_rel_insert_input
+	block_id: bpchar
+	call: call_obj_rel_insert_input
+	calls: call_arr_rel_insert_input
+	error: jsonb
+	events: event_arr_rel_insert_input
+	extrinsic: extrinsic_obj_rel_insert_input
+	extrinsic_id: bpchar
+	id: String
+	name: String
+	origin: jsonb
+	parent_id: String
+	pos: Int
+	success: Boolean
+}
+
+"""
+aggregate max on columns
+"""
+type call_max_fields {
+	block_id: bpchar
+	extrinsic_id: bpchar
+	id: String
+	name: String
+	parent_id: String
+	pos: Int
+}
+
+"""
+order by max() on columns of table "call"
+"""
+input call_max_order_by {
+	block_id: order_by
+	extrinsic_id: order_by
+	id: order_by
+	name: order_by
+	parent_id: order_by
+	pos: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type call_min_fields {
+	block_id: bpchar
+	extrinsic_id: bpchar
+	id: String
+	name: String
+	parent_id: String
+	pos: Int
+}
+
+"""
+order by min() on columns of table "call"
+"""
+input call_min_order_by {
+	block_id: order_by
+	extrinsic_id: order_by
+	id: order_by
+	name: order_by
+	parent_id: order_by
+	pos: order_by
+}
+
+"""
+response of any mutation on the table "call"
+"""
+type call_mutation_response {
+	"""
+	number of rows affected by the mutation
+	"""
+	affected_rows: Int!
+
+	"""
+	data from the rows affected by the mutation
+	"""
+	returning: [call!]!
+}
+
+"""
+input type for inserting object relation for remote table "call"
+"""
+input call_obj_rel_insert_input {
+	data: call_insert_input!
+
+	"""
+	upsert condition
+	"""
+	on_conflict: call_on_conflict
+}
+
+"""
+on_conflict condition type for table "call"
+"""
+input call_on_conflict {
+	constraint: call_constraint!
+	update_columns: [call_update_column!]! = []
+	where: call_bool_exp
+}
+
+"""
+Ordering options when selecting data from "call".
+"""
+input call_order_by {
+	args: order_by
+	block: block_order_by
+	block_id: order_by
+	call: call_order_by
+	calls_aggregate: call_aggregate_order_by
+	error: order_by
+	events_aggregate: event_aggregate_order_by
+	extrinsic: extrinsic_order_by
+	extrinsic_id: order_by
+	id: order_by
+	name: order_by
+	origin: order_by
+	parent_id: order_by
+	pos: order_by
+	success: order_by
+}
+
+"""
+primary key columns input for table: call
+"""
+input call_pk_columns_input {
+	id: String!
+}
+
+"""
+prepend existing jsonb value of filtered columns with new jsonb value
+"""
+input call_prepend_input {
+	args: jsonb
+	error: jsonb
+	origin: jsonb
+}
+
+"""
+select columns of table "call"
+"""
+enum call_select_column {
+	"""
+	column name
+	"""
+	args
+
+	"""
+	column name
+	"""
+	block_id
+
+	"""
+	column name
+	"""
+	error
+
+	"""
+	column name
+	"""
+	extrinsic_id
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	name
+
+	"""
+	column name
+	"""
+	origin
+
+	"""
+	column name
+	"""
+	parent_id
+
+	"""
+	column name
+	"""
+	pos
+
+	"""
+	column name
+	"""
+	success
+}
+
+"""
+input type for updating data in table "call"
+"""
+input call_set_input {
+	args: jsonb
+	block_id: bpchar
+	error: jsonb
+	extrinsic_id: bpchar
+	id: String
+	name: String
+	origin: jsonb
+	parent_id: String
+	pos: Int
+	success: Boolean
+}
+
+"""
+aggregate stddev on columns
+"""
+type call_stddev_fields {
+	pos: Float
+}
+
+"""
+order by stddev() on columns of table "call"
+"""
+input call_stddev_order_by {
+	pos: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type call_stddev_pop_fields {
+	pos: Float
+}
+
+"""
+order by stddev_pop() on columns of table "call"
+"""
+input call_stddev_pop_order_by {
+	pos: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type call_stddev_samp_fields {
+	pos: Float
+}
+
+"""
+order by stddev_samp() on columns of table "call"
+"""
+input call_stddev_samp_order_by {
+	pos: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type call_sum_fields {
+	pos: Int
+}
+
+"""
+order by sum() on columns of table "call"
+"""
+input call_sum_order_by {
+	pos: order_by
+}
+
+"""
+update columns of table "call"
+"""
+enum call_update_column {
+	"""
+	column name
+	"""
+	args
+
+	"""
+	column name
+	"""
+	block_id
+
+	"""
+	column name
+	"""
+	error
+
+	"""
+	column name
+	"""
+	extrinsic_id
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	name
+
+	"""
+	column name
+	"""
+	origin
+
+	"""
+	column name
+	"""
+	parent_id
+
+	"""
+	column name
+	"""
+	pos
+
+	"""
+	column name
+	"""
+	success
+}
+
+input call_updates {
+	"""
+	append existing jsonb value of filtered columns with new jsonb value
+	"""
+	_append: call_append_input
+
+	"""
+	delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+	"""
+	_delete_at_path: call_delete_at_path_input
+
+	"""
+	delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+	"""
+	_delete_elem: call_delete_elem_input
+
+	"""
+	delete key/value pair or string element. key/value pairs are matched based on their key value
+	"""
+	_delete_key: call_delete_key_input
+
+	"""
+	increments the numeric columns with given value of the filtered values
+	"""
+	_inc: call_inc_input
+
+	"""
+	prepend existing jsonb value of filtered columns with new jsonb value
+	"""
+	_prepend: call_prepend_input
+
+	"""
+	sets the columns of the filtered rows to the given values
+	"""
+	_set: call_set_input
+	where: call_bool_exp!
+}
+
+"""
+aggregate var_pop on columns
+"""
+type call_var_pop_fields {
+	pos: Float
+}
+
+"""
+order by var_pop() on columns of table "call"
+"""
+input call_var_pop_order_by {
+	pos: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type call_var_samp_fields {
+	pos: Float
+}
+
+"""
+order by var_samp() on columns of table "call"
+"""
+input call_var_samp_order_by {
+	pos: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type call_variance_fields {
+	pos: Float
+}
+
+"""
+order by variance() on columns of table "call"
+"""
+input call_variance_order_by {
+	pos: order_by
+}
+
+"""
+columns and relationships of "event"
+"""
+type event {
+	args(
+		"""
+		JSON select path
+		"""
+		path: String
+	): jsonb
+
+	"""
+	An object relationship
+	"""
+	block: block!
+	block_id: bpchar!
+
+	"""
+	An object relationship
+	"""
+	call: call
+	call_id: String
+
+	"""
+	An object relationship
+	"""
+	extrinsic: extrinsic
+	extrinsic_id: bpchar
+	id: bpchar!
+	index_in_block: Int!
+	name: String!
+	phase: String!
+	pos: Int!
+}
+
+"""
+aggregated selection of "event"
+"""
+type event_aggregate {
+	aggregate: event_aggregate_fields
+	nodes: [event!]!
+}
+
+"""
+aggregate fields of "event"
+"""
+type event_aggregate_fields {
+	avg: event_avg_fields
+	count(columns: [event_select_column!], distinct: Boolean): Int!
+	max: event_max_fields
+	min: event_min_fields
+	stddev: event_stddev_fields
+	stddev_pop: event_stddev_pop_fields
+	stddev_samp: event_stddev_samp_fields
+	sum: event_sum_fields
+	var_pop: event_var_pop_fields
+	var_samp: event_var_samp_fields
+	variance: event_variance_fields
+}
+
+"""
+order by aggregate values of table "event"
+"""
+input event_aggregate_order_by {
+	avg: event_avg_order_by
+	count: order_by
+	max: event_max_order_by
+	min: event_min_order_by
+	stddev: event_stddev_order_by
+	stddev_pop: event_stddev_pop_order_by
+	stddev_samp: event_stddev_samp_order_by
+	sum: event_sum_order_by
+	var_pop: event_var_pop_order_by
+	var_samp: event_var_samp_order_by
+	variance: event_variance_order_by
+}
+
+"""
+append existing jsonb value of filtered columns with new jsonb value
+"""
+input event_append_input {
+	args: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "event"
+"""
+input event_arr_rel_insert_input {
+	data: [event_insert_input!]!
+
+	"""
+	upsert condition
+	"""
+	on_conflict: event_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type event_avg_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by avg() on columns of table "event"
+"""
+input event_avg_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "event". All fields are combined with a logical 'AND'.
+"""
+input event_bool_exp {
+	_and: [event_bool_exp!]
+	_not: event_bool_exp
+	_or: [event_bool_exp!]
+	args: jsonb_comparison_exp
+	block: block_bool_exp
+	block_id: bpchar_comparison_exp
+	call: call_bool_exp
+	call_id: String_comparison_exp
+	extrinsic: extrinsic_bool_exp
+	extrinsic_id: bpchar_comparison_exp
+	id: bpchar_comparison_exp
+	index_in_block: Int_comparison_exp
+	name: String_comparison_exp
+	phase: String_comparison_exp
+	pos: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "event"
+"""
+enum event_constraint {
+	"""
+	unique or primary key constraint on columns "id"
+	"""
+	event_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input event_delete_at_path_input {
+	args: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input event_delete_elem_input {
+	args: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input event_delete_key_input {
+	args: String
+}
+
+"""
+input type for incrementing numeric columns in table "event"
+"""
+input event_inc_input {
+	index_in_block: Int
+	pos: Int
+}
+
+"""
+input type for inserting data into table "event"
+"""
+input event_insert_input {
+	args: jsonb
+	block: block_obj_rel_insert_input
+	block_id: bpchar
+	call: call_obj_rel_insert_input
+	call_id: String
+	extrinsic: extrinsic_obj_rel_insert_input
+	extrinsic_id: bpchar
+	id: bpchar
+	index_in_block: Int
+	name: String
+	phase: String
+	pos: Int
+}
+
+"""
+aggregate max on columns
+"""
+type event_max_fields {
+	block_id: bpchar
+	call_id: String
+	extrinsic_id: bpchar
+	id: bpchar
+	index_in_block: Int
+	name: String
+	phase: String
+	pos: Int
+}
+
+"""
+order by max() on columns of table "event"
+"""
+input event_max_order_by {
+	block_id: order_by
+	call_id: order_by
+	extrinsic_id: order_by
+	id: order_by
+	index_in_block: order_by
+	name: order_by
+	phase: order_by
+	pos: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type event_min_fields {
+	block_id: bpchar
+	call_id: String
+	extrinsic_id: bpchar
+	id: bpchar
+	index_in_block: Int
+	name: String
+	phase: String
+	pos: Int
+}
+
+"""
+order by min() on columns of table "event"
+"""
+input event_min_order_by {
+	block_id: order_by
+	call_id: order_by
+	extrinsic_id: order_by
+	id: order_by
+	index_in_block: order_by
+	name: order_by
+	phase: order_by
+	pos: order_by
+}
+
+"""
+response of any mutation on the table "event"
+"""
+type event_mutation_response {
+	"""
+	number of rows affected by the mutation
+	"""
+	affected_rows: Int!
+
+	"""
+	data from the rows affected by the mutation
+	"""
+	returning: [event!]!
+}
+
+"""
+on_conflict condition type for table "event"
+"""
+input event_on_conflict {
+	constraint: event_constraint!
+	update_columns: [event_update_column!]! = []
+	where: event_bool_exp
+}
+
+"""
+Ordering options when selecting data from "event".
+"""
+input event_order_by {
+	args: order_by
+	block: block_order_by
+	block_id: order_by
+	call: call_order_by
+	call_id: order_by
+	extrinsic: extrinsic_order_by
+	extrinsic_id: order_by
+	id: order_by
+	index_in_block: order_by
+	name: order_by
+	phase: order_by
+	pos: order_by
+}
+
+"""
+primary key columns input for table: event
+"""
+input event_pk_columns_input {
+	id: bpchar!
+}
+
+"""
+prepend existing jsonb value of filtered columns with new jsonb value
+"""
+input event_prepend_input {
+	args: jsonb
+}
+
+"""
+select columns of table "event"
+"""
+enum event_select_column {
+	"""
+	column name
+	"""
+	args
+
+	"""
+	column name
+	"""
+	block_id
+
+	"""
+	column name
+	"""
+	call_id
+
+	"""
+	column name
+	"""
+	extrinsic_id
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	index_in_block
+
+	"""
+	column name
+	"""
+	name
+
+	"""
+	column name
+	"""
+	phase
+
+	"""
+	column name
+	"""
+	pos
+}
+
+"""
+input type for updating data in table "event"
+"""
+input event_set_input {
+	args: jsonb
+	block_id: bpchar
+	call_id: String
+	extrinsic_id: bpchar
+	id: bpchar
+	index_in_block: Int
+	name: String
+	phase: String
+	pos: Int
+}
+
+"""
+aggregate stddev on columns
+"""
+type event_stddev_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by stddev() on columns of table "event"
+"""
+input event_stddev_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type event_stddev_pop_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by stddev_pop() on columns of table "event"
+"""
+input event_stddev_pop_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type event_stddev_samp_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by stddev_samp() on columns of table "event"
+"""
+input event_stddev_samp_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type event_sum_fields {
+	index_in_block: Int
+	pos: Int
+}
+
+"""
+order by sum() on columns of table "event"
+"""
+input event_sum_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+update columns of table "event"
+"""
+enum event_update_column {
+	"""
+	column name
+	"""
+	args
+
+	"""
+	column name
+	"""
+	block_id
+
+	"""
+	column name
+	"""
+	call_id
+
+	"""
+	column name
+	"""
+	extrinsic_id
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	index_in_block
+
+	"""
+	column name
+	"""
+	name
+
+	"""
+	column name
+	"""
+	phase
+
+	"""
+	column name
+	"""
+	pos
+}
+
+input event_updates {
+	"""
+	append existing jsonb value of filtered columns with new jsonb value
+	"""
+	_append: event_append_input
+
+	"""
+	delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+	"""
+	_delete_at_path: event_delete_at_path_input
+
+	"""
+	delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+	"""
+	_delete_elem: event_delete_elem_input
+
+	"""
+	delete key/value pair or string element. key/value pairs are matched based on their key value
+	"""
+	_delete_key: event_delete_key_input
+
+	"""
+	increments the numeric columns with given value of the filtered values
+	"""
+	_inc: event_inc_input
+
+	"""
+	prepend existing jsonb value of filtered columns with new jsonb value
+	"""
+	_prepend: event_prepend_input
+
+	"""
+	sets the columns of the filtered rows to the given values
+	"""
+	_set: event_set_input
+	where: event_bool_exp!
+}
+
+"""
+aggregate var_pop on columns
+"""
+type event_var_pop_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by var_pop() on columns of table "event"
+"""
+input event_var_pop_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type event_var_samp_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by var_samp() on columns of table "event"
+"""
+input event_var_samp_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type event_variance_fields {
+	index_in_block: Float
+	pos: Float
+}
+
+"""
+order by variance() on columns of table "event"
+"""
+input event_variance_order_by {
+	index_in_block: order_by
+	pos: order_by
+}
+
+"""
+columns and relationships of "extrinsic"
+"""
+type extrinsic {
+	"""
+	An object relationship
+	"""
+	block: block!
+	block_id: bpchar!
+	call_id: String!
+
+	"""
+	An array relationship
+	"""
+	calls(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): [call!]!
+
+	"""
+	An aggregate relationship
+	"""
+	calls_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): call_aggregate!
+	error(
+		"""
+		JSON select path
+		"""
+		path: String
+	): jsonb
+
+	"""
+	An array relationship
+	"""
+	events(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): [event!]!
+
+	"""
+	An aggregate relationship
+	"""
+	events_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): event_aggregate!
+	fee: numeric
+	hash: bpchar!
+	id: bpchar!
+	index_in_block: Int!
+	pos: Int!
+	signature(
+		"""
+		JSON select path
+		"""
+		path: String
+	): jsonb
+	success: Boolean!
+	tip: numeric
+	version: Int!
+}
+
+"""
+aggregated selection of "extrinsic"
+"""
+type extrinsic_aggregate {
+	aggregate: extrinsic_aggregate_fields
+	nodes: [extrinsic!]!
+}
+
+"""
+aggregate fields of "extrinsic"
+"""
+type extrinsic_aggregate_fields {
+	avg: extrinsic_avg_fields
+	count(columns: [extrinsic_select_column!], distinct: Boolean): Int!
+	max: extrinsic_max_fields
+	min: extrinsic_min_fields
+	stddev: extrinsic_stddev_fields
+	stddev_pop: extrinsic_stddev_pop_fields
+	stddev_samp: extrinsic_stddev_samp_fields
+	sum: extrinsic_sum_fields
+	var_pop: extrinsic_var_pop_fields
+	var_samp: extrinsic_var_samp_fields
+	variance: extrinsic_variance_fields
+}
+
+"""
+order by aggregate values of table "extrinsic"
+"""
+input extrinsic_aggregate_order_by {
+	avg: extrinsic_avg_order_by
+	count: order_by
+	max: extrinsic_max_order_by
+	min: extrinsic_min_order_by
+	stddev: extrinsic_stddev_order_by
+	stddev_pop: extrinsic_stddev_pop_order_by
+	stddev_samp: extrinsic_stddev_samp_order_by
+	sum: extrinsic_sum_order_by
+	var_pop: extrinsic_var_pop_order_by
+	var_samp: extrinsic_var_samp_order_by
+	variance: extrinsic_variance_order_by
+}
+
+"""
+append existing jsonb value of filtered columns with new jsonb value
+"""
+input extrinsic_append_input {
+	error: jsonb
+	signature: jsonb
+}
+
+"""
+input type for inserting array relation for remote table "extrinsic"
+"""
+input extrinsic_arr_rel_insert_input {
+	data: [extrinsic_insert_input!]!
+
+	"""
+	upsert condition
+	"""
+	on_conflict: extrinsic_on_conflict
+}
+
+"""
+aggregate avg on columns
+"""
+type extrinsic_avg_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by avg() on columns of table "extrinsic"
+"""
+input extrinsic_avg_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "extrinsic". All fields are combined with a logical 'AND'.
+"""
+input extrinsic_bool_exp {
+	_and: [extrinsic_bool_exp!]
+	_not: extrinsic_bool_exp
+	_or: [extrinsic_bool_exp!]
+	block: block_bool_exp
+	block_id: bpchar_comparison_exp
+	call_id: String_comparison_exp
+	calls: call_bool_exp
+	error: jsonb_comparison_exp
+	events: event_bool_exp
+	fee: numeric_comparison_exp
+	hash: bpchar_comparison_exp
+	id: bpchar_comparison_exp
+	index_in_block: Int_comparison_exp
+	pos: Int_comparison_exp
+	signature: jsonb_comparison_exp
+	success: Boolean_comparison_exp
+	tip: numeric_comparison_exp
+	version: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "extrinsic"
+"""
+enum extrinsic_constraint {
+	"""
+	unique or primary key constraint on columns "id"
+	"""
+	extrinsic_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input extrinsic_delete_at_path_input {
+	error: [String!]
+	signature: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input extrinsic_delete_elem_input {
+	error: Int
+	signature: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input extrinsic_delete_key_input {
+	error: String
+	signature: String
+}
+
+"""
+input type for incrementing numeric columns in table "extrinsic"
+"""
+input extrinsic_inc_input {
+	fee: numeric
+	index_in_block: Int
+	pos: Int
+	tip: numeric
+	version: Int
+}
+
+"""
+input type for inserting data into table "extrinsic"
+"""
+input extrinsic_insert_input {
+	block: block_obj_rel_insert_input
+	block_id: bpchar
+	call_id: String
+	calls: call_arr_rel_insert_input
+	error: jsonb
+	events: event_arr_rel_insert_input
+	fee: numeric
+	hash: bpchar
+	id: bpchar
+	index_in_block: Int
+	pos: Int
+	signature: jsonb
+	success: Boolean
+	tip: numeric
+	version: Int
+}
+
+"""
+aggregate max on columns
+"""
+type extrinsic_max_fields {
+	block_id: bpchar
+	call_id: String
+	fee: numeric
+	hash: bpchar
+	id: bpchar
+	index_in_block: Int
+	pos: Int
+	tip: numeric
+	version: Int
+}
+
+"""
+order by max() on columns of table "extrinsic"
+"""
+input extrinsic_max_order_by {
+	block_id: order_by
+	call_id: order_by
+	fee: order_by
+	hash: order_by
+	id: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+aggregate min on columns
+"""
+type extrinsic_min_fields {
+	block_id: bpchar
+	call_id: String
+	fee: numeric
+	hash: bpchar
+	id: bpchar
+	index_in_block: Int
+	pos: Int
+	tip: numeric
+	version: Int
+}
+
+"""
+order by min() on columns of table "extrinsic"
+"""
+input extrinsic_min_order_by {
+	block_id: order_by
+	call_id: order_by
+	fee: order_by
+	hash: order_by
+	id: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+response of any mutation on the table "extrinsic"
+"""
+type extrinsic_mutation_response {
+	"""
+	number of rows affected by the mutation
+	"""
+	affected_rows: Int!
+
+	"""
+	data from the rows affected by the mutation
+	"""
+	returning: [extrinsic!]!
+}
+
+"""
+input type for inserting object relation for remote table "extrinsic"
+"""
+input extrinsic_obj_rel_insert_input {
+	data: extrinsic_insert_input!
+
+	"""
+	upsert condition
+	"""
+	on_conflict: extrinsic_on_conflict
+}
+
+"""
+on_conflict condition type for table "extrinsic"
+"""
+input extrinsic_on_conflict {
+	constraint: extrinsic_constraint!
+	update_columns: [extrinsic_update_column!]! = []
+	where: extrinsic_bool_exp
+}
+
+"""
+Ordering options when selecting data from "extrinsic".
+"""
+input extrinsic_order_by {
+	block: block_order_by
+	block_id: order_by
+	call_id: order_by
+	calls_aggregate: call_aggregate_order_by
+	error: order_by
+	events_aggregate: event_aggregate_order_by
+	fee: order_by
+	hash: order_by
+	id: order_by
+	index_in_block: order_by
+	pos: order_by
+	signature: order_by
+	success: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+primary key columns input for table: extrinsic
+"""
+input extrinsic_pk_columns_input {
+	id: bpchar!
+}
+
+"""
+prepend existing jsonb value of filtered columns with new jsonb value
+"""
+input extrinsic_prepend_input {
+	error: jsonb
+	signature: jsonb
+}
+
+"""
+select columns of table "extrinsic"
+"""
+enum extrinsic_select_column {
+	"""
+	column name
+	"""
+	block_id
+
+	"""
+	column name
+	"""
+	call_id
+
+	"""
+	column name
+	"""
+	error
+
+	"""
+	column name
+	"""
+	fee
+
+	"""
+	column name
+	"""
+	hash
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	index_in_block
+
+	"""
+	column name
+	"""
+	pos
+
+	"""
+	column name
+	"""
+	signature
+
+	"""
+	column name
+	"""
+	success
+
+	"""
+	column name
+	"""
+	tip
+
+	"""
+	column name
+	"""
+	version
+}
+
+"""
+input type for updating data in table "extrinsic"
+"""
+input extrinsic_set_input {
+	block_id: bpchar
+	call_id: String
+	error: jsonb
+	fee: numeric
+	hash: bpchar
+	id: bpchar
+	index_in_block: Int
+	pos: Int
+	signature: jsonb
+	success: Boolean
+	tip: numeric
+	version: Int
+}
+
+"""
+aggregate stddev on columns
+"""
+type extrinsic_stddev_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by stddev() on columns of table "extrinsic"
+"""
+input extrinsic_stddev_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+aggregate stddev_pop on columns
+"""
+type extrinsic_stddev_pop_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by stddev_pop() on columns of table "extrinsic"
+"""
+input extrinsic_stddev_pop_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+aggregate stddev_samp on columns
+"""
+type extrinsic_stddev_samp_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by stddev_samp() on columns of table "extrinsic"
+"""
+input extrinsic_stddev_samp_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+aggregate sum on columns
+"""
+type extrinsic_sum_fields {
+	fee: numeric
+	index_in_block: Int
+	pos: Int
+	tip: numeric
+	version: Int
+}
+
+"""
+order by sum() on columns of table "extrinsic"
+"""
+input extrinsic_sum_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+update columns of table "extrinsic"
+"""
+enum extrinsic_update_column {
+	"""
+	column name
+	"""
+	block_id
+
+	"""
+	column name
+	"""
+	call_id
+
+	"""
+	column name
+	"""
+	error
+
+	"""
+	column name
+	"""
+	fee
+
+	"""
+	column name
+	"""
+	hash
+
+	"""
+	column name
+	"""
+	id
+
+	"""
+	column name
+	"""
+	index_in_block
+
+	"""
+	column name
+	"""
+	pos
+
+	"""
+	column name
+	"""
+	signature
+
+	"""
+	column name
+	"""
+	success
+
+	"""
+	column name
+	"""
+	tip
+
+	"""
+	column name
+	"""
+	version
+}
+
+input extrinsic_updates {
+	"""
+	append existing jsonb value of filtered columns with new jsonb value
+	"""
+	_append: extrinsic_append_input
+
+	"""
+	delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+	"""
+	_delete_at_path: extrinsic_delete_at_path_input
+
+	"""
+	delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+	"""
+	_delete_elem: extrinsic_delete_elem_input
+
+	"""
+	delete key/value pair or string element. key/value pairs are matched based on their key value
+	"""
+	_delete_key: extrinsic_delete_key_input
+
+	"""
+	increments the numeric columns with given value of the filtered values
+	"""
+	_inc: extrinsic_inc_input
+
+	"""
+	prepend existing jsonb value of filtered columns with new jsonb value
+	"""
+	_prepend: extrinsic_prepend_input
+
+	"""
+	sets the columns of the filtered rows to the given values
+	"""
+	_set: extrinsic_set_input
+	where: extrinsic_bool_exp!
+}
+
+"""
+aggregate var_pop on columns
+"""
+type extrinsic_var_pop_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by var_pop() on columns of table "extrinsic"
+"""
+input extrinsic_var_pop_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+aggregate var_samp on columns
+"""
+type extrinsic_var_samp_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by var_samp() on columns of table "extrinsic"
+"""
+input extrinsic_var_samp_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+"""
+aggregate variance on columns
+"""
+type extrinsic_variance_fields {
+	fee: Float
+	index_in_block: Float
+	pos: Float
+	tip: Float
+	version: Float
+}
+
+"""
+order by variance() on columns of table "extrinsic"
+"""
+input extrinsic_variance_order_by {
+	fee: order_by
+	index_in_block: order_by
+	pos: order_by
+	tip: order_by
+	version: order_by
+}
+
+scalar jsonb
+
+input jsonb_cast_exp {
+	String: String_comparison_exp
+}
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+	_cast: jsonb_cast_exp
+
+	"""
+	is the column contained in the given json value
+	"""
+	_contained_in: jsonb
+
+	"""
+	does the column contain the given json value at the top level
+	"""
+	_contains: jsonb
+	_eq: jsonb
+	_gt: jsonb
+	_gte: jsonb
+
+	"""
+	does the string exist as a top-level key in the column
+	"""
+	_has_key: String
+
+	"""
+	do all of these strings exist as top-level keys in the column
+	"""
+	_has_keys_all: [String!]
+
+	"""
+	do any of these strings exist as top-level keys in the column
+	"""
+	_has_keys_any: [String!]
+	_in: [jsonb!]
+	_is_null: Boolean
+	_lt: jsonb
+	_lte: jsonb
+	_neq: jsonb
+	_nin: [jsonb!]
+}
+
+"""
+mutation root
+"""
+type mutation_root {
+	"""
+	delete data from the table: "block"
+	"""
+	delete_block(
+		"""
+		filter the rows which have to be deleted
+		"""
+		where: block_bool_exp!
+	): block_mutation_response
+
+	"""
+	delete single row from the table: "block"
+	"""
+	delete_block_by_pk(id: bpchar!): block
+
+	"""
+	delete data from the table: "call"
+	"""
+	delete_call(
+		"""
+		filter the rows which have to be deleted
+		"""
+		where: call_bool_exp!
+	): call_mutation_response
+
+	"""
+	delete single row from the table: "call"
+	"""
+	delete_call_by_pk(id: String!): call
+
+	"""
+	delete data from the table: "event"
+	"""
+	delete_event(
+		"""
+		filter the rows which have to be deleted
+		"""
+		where: event_bool_exp!
+	): event_mutation_response
+
+	"""
+	delete single row from the table: "event"
+	"""
+	delete_event_by_pk(id: bpchar!): event
+
+	"""
+	delete data from the table: "extrinsic"
+	"""
+	delete_extrinsic(
+		"""
+		filter the rows which have to be deleted
+		"""
+		where: extrinsic_bool_exp!
+	): extrinsic_mutation_response
+
+	"""
+	delete single row from the table: "extrinsic"
+	"""
+	delete_extrinsic_by_pk(id: bpchar!): extrinsic
+
+	"""
+	insert data into the table: "block"
+	"""
+	insert_block(
+		"""
+		the rows to be inserted
+		"""
+		objects: [block_insert_input!]!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: block_on_conflict
+	): block_mutation_response
+
+	"""
+	insert a single row into the table: "block"
+	"""
+	insert_block_one(
+		"""
+		the row to be inserted
+		"""
+		object: block_insert_input!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: block_on_conflict
+	): block
+
+	"""
+	insert data into the table: "call"
+	"""
+	insert_call(
+		"""
+		the rows to be inserted
+		"""
+		objects: [call_insert_input!]!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: call_on_conflict
+	): call_mutation_response
+
+	"""
+	insert a single row into the table: "call"
+	"""
+	insert_call_one(
+		"""
+		the row to be inserted
+		"""
+		object: call_insert_input!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: call_on_conflict
+	): call
+
+	"""
+	insert data into the table: "event"
+	"""
+	insert_event(
+		"""
+		the rows to be inserted
+		"""
+		objects: [event_insert_input!]!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: event_on_conflict
+	): event_mutation_response
+
+	"""
+	insert a single row into the table: "event"
+	"""
+	insert_event_one(
+		"""
+		the row to be inserted
+		"""
+		object: event_insert_input!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: event_on_conflict
+	): event
+
+	"""
+	insert data into the table: "extrinsic"
+	"""
+	insert_extrinsic(
+		"""
+		the rows to be inserted
+		"""
+		objects: [extrinsic_insert_input!]!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: extrinsic_on_conflict
+	): extrinsic_mutation_response
+
+	"""
+	insert a single row into the table: "extrinsic"
+	"""
+	insert_extrinsic_one(
+		"""
+		the row to be inserted
+		"""
+		object: extrinsic_insert_input!
+
+		"""
+		upsert condition
+		"""
+		on_conflict: extrinsic_on_conflict
+	): extrinsic
+
+	"""
+	update data of the table: "block"
+	"""
+	update_block(
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: block_inc_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: block_set_input
+
+		"""
+		filter the rows which have to be updated
+		"""
+		where: block_bool_exp!
+	): block_mutation_response
+
+	"""
+	update single row of the table: "block"
+	"""
+	update_block_by_pk(
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: block_inc_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: block_set_input
+		pk_columns: block_pk_columns_input!
+	): block
+
+	"""
+	update multiples rows of table: "block"
+	"""
+	update_block_many(
+		"""
+		updates to execute, in order
+		"""
+		updates: [block_updates!]!
+	): [block_mutation_response]
+
+	"""
+	update data of the table: "call"
+	"""
+	update_call(
+		"""
+		append existing jsonb value of filtered columns with new jsonb value
+		"""
+		_append: call_append_input
+
+		"""
+		delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+		"""
+		_delete_at_path: call_delete_at_path_input
+
+		"""
+		delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+		"""
+		_delete_elem: call_delete_elem_input
+
+		"""
+		delete key/value pair or string element. key/value pairs are matched based on their key value
+		"""
+		_delete_key: call_delete_key_input
+
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: call_inc_input
+
+		"""
+		prepend existing jsonb value of filtered columns with new jsonb value
+		"""
+		_prepend: call_prepend_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: call_set_input
+
+		"""
+		filter the rows which have to be updated
+		"""
+		where: call_bool_exp!
+	): call_mutation_response
+
+	"""
+	update single row of the table: "call"
+	"""
+	update_call_by_pk(
+		"""
+		append existing jsonb value of filtered columns with new jsonb value
+		"""
+		_append: call_append_input
+
+		"""
+		delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+		"""
+		_delete_at_path: call_delete_at_path_input
+
+		"""
+		delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+		"""
+		_delete_elem: call_delete_elem_input
+
+		"""
+		delete key/value pair or string element. key/value pairs are matched based on their key value
+		"""
+		_delete_key: call_delete_key_input
+
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: call_inc_input
+
+		"""
+		prepend existing jsonb value of filtered columns with new jsonb value
+		"""
+		_prepend: call_prepend_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: call_set_input
+		pk_columns: call_pk_columns_input!
+	): call
+
+	"""
+	update multiples rows of table: "call"
+	"""
+	update_call_many(
+		"""
+		updates to execute, in order
+		"""
+		updates: [call_updates!]!
+	): [call_mutation_response]
+
+	"""
+	update data of the table: "event"
+	"""
+	update_event(
+		"""
+		append existing jsonb value of filtered columns with new jsonb value
+		"""
+		_append: event_append_input
+
+		"""
+		delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+		"""
+		_delete_at_path: event_delete_at_path_input
+
+		"""
+		delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+		"""
+		_delete_elem: event_delete_elem_input
+
+		"""
+		delete key/value pair or string element. key/value pairs are matched based on their key value
+		"""
+		_delete_key: event_delete_key_input
+
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: event_inc_input
+
+		"""
+		prepend existing jsonb value of filtered columns with new jsonb value
+		"""
+		_prepend: event_prepend_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: event_set_input
+
+		"""
+		filter the rows which have to be updated
+		"""
+		where: event_bool_exp!
+	): event_mutation_response
+
+	"""
+	update single row of the table: "event"
+	"""
+	update_event_by_pk(
+		"""
+		append existing jsonb value of filtered columns with new jsonb value
+		"""
+		_append: event_append_input
+
+		"""
+		delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+		"""
+		_delete_at_path: event_delete_at_path_input
+
+		"""
+		delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+		"""
+		_delete_elem: event_delete_elem_input
+
+		"""
+		delete key/value pair or string element. key/value pairs are matched based on their key value
+		"""
+		_delete_key: event_delete_key_input
+
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: event_inc_input
+
+		"""
+		prepend existing jsonb value of filtered columns with new jsonb value
+		"""
+		_prepend: event_prepend_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: event_set_input
+		pk_columns: event_pk_columns_input!
+	): event
+
+	"""
+	update multiples rows of table: "event"
+	"""
+	update_event_many(
+		"""
+		updates to execute, in order
+		"""
+		updates: [event_updates!]!
+	): [event_mutation_response]
+
+	"""
+	update data of the table: "extrinsic"
+	"""
+	update_extrinsic(
+		"""
+		append existing jsonb value of filtered columns with new jsonb value
+		"""
+		_append: extrinsic_append_input
+
+		"""
+		delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+		"""
+		_delete_at_path: extrinsic_delete_at_path_input
+
+		"""
+		delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+		"""
+		_delete_elem: extrinsic_delete_elem_input
+
+		"""
+		delete key/value pair or string element. key/value pairs are matched based on their key value
+		"""
+		_delete_key: extrinsic_delete_key_input
+
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: extrinsic_inc_input
+
+		"""
+		prepend existing jsonb value of filtered columns with new jsonb value
+		"""
+		_prepend: extrinsic_prepend_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: extrinsic_set_input
+
+		"""
+		filter the rows which have to be updated
+		"""
+		where: extrinsic_bool_exp!
+	): extrinsic_mutation_response
+
+	"""
+	update single row of the table: "extrinsic"
+	"""
+	update_extrinsic_by_pk(
+		"""
+		append existing jsonb value of filtered columns with new jsonb value
+		"""
+		_append: extrinsic_append_input
+
+		"""
+		delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+		"""
+		_delete_at_path: extrinsic_delete_at_path_input
+
+		"""
+		delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+		"""
+		_delete_elem: extrinsic_delete_elem_input
+
+		"""
+		delete key/value pair or string element. key/value pairs are matched based on their key value
+		"""
+		_delete_key: extrinsic_delete_key_input
+
+		"""
+		increments the numeric columns with given value of the filtered values
+		"""
+		_inc: extrinsic_inc_input
+
+		"""
+		prepend existing jsonb value of filtered columns with new jsonb value
+		"""
+		_prepend: extrinsic_prepend_input
+
+		"""
+		sets the columns of the filtered rows to the given values
+		"""
+		_set: extrinsic_set_input
+		pk_columns: extrinsic_pk_columns_input!
+	): extrinsic
+
+	"""
+	update multiples rows of table: "extrinsic"
+	"""
+	update_extrinsic_many(
+		"""
+		updates to execute, in order
+		"""
+		updates: [extrinsic_updates!]!
+	): [extrinsic_mutation_response]
+}
+
+scalar numeric
+
+"""
+Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'.
+"""
+input numeric_comparison_exp {
+	_eq: numeric
+	_gt: numeric
+	_gte: numeric
+	_in: [numeric!]
+	_is_null: Boolean
+	_lt: numeric
+	_lte: numeric
+	_neq: numeric
+	_nin: [numeric!]
+}
+
+"""
+column ordering options
+"""
+enum order_by {
+	"""
+	in ascending order, nulls last
+	"""
+	asc
+
+	"""
+	in ascending order, nulls first
+	"""
+	asc_nulls_first
+
+	"""
+	in ascending order, nulls last
+	"""
+	asc_nulls_last
+
+	"""
+	in descending order, nulls first
+	"""
+	desc
+
+	"""
+	in descending order, nulls first
+	"""
+	desc_nulls_first
+
+	"""
+	in descending order, nulls last
+	"""
+	desc_nulls_last
+}
+
+type query_root {
+	"""
+	fetch data from the table: "block"
+	"""
+	block(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [block_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [block_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: block_bool_exp
+	): [block!]!
+
+	"""
+	fetch aggregated fields from the table: "block"
+	"""
+	block_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [block_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [block_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: block_bool_exp
+	): block_aggregate!
+
+	"""
+	fetch data from the table: "block" using primary key columns
+	"""
+	block_by_pk(id: bpchar!): block
+
+	"""
+	fetch data from the table: "call"
+	"""
+	call(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): [call!]!
+
+	"""
+	fetch aggregated fields from the table: "call"
+	"""
+	call_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): call_aggregate!
+
+	"""
+	fetch data from the table: "call" using primary key columns
+	"""
+	call_by_pk(id: String!): call
+
+	"""
+	fetch data from the table: "event"
+	"""
+	event(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): [event!]!
+
+	"""
+	fetch aggregated fields from the table: "event"
+	"""
+	event_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): event_aggregate!
+
+	"""
+	fetch data from the table: "event" using primary key columns
+	"""
+	event_by_pk(id: bpchar!): event
+
+	"""
+	fetch data from the table: "extrinsic"
+	"""
+	extrinsic(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [extrinsic_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [extrinsic_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: extrinsic_bool_exp
+	): [extrinsic!]!
+
+	"""
+	fetch aggregated fields from the table: "extrinsic"
+	"""
+	extrinsic_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [extrinsic_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [extrinsic_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: extrinsic_bool_exp
+	): extrinsic_aggregate!
+
+	"""
+	fetch data from the table: "extrinsic" using primary key columns
+	"""
+	extrinsic_by_pk(id: bpchar!): extrinsic
+}
+
+type subscription_root {
+	"""
+	fetch data from the table: "block"
+	"""
+	block(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [block_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [block_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: block_bool_exp
+	): [block!]!
+
+	"""
+	fetch aggregated fields from the table: "block"
+	"""
+	block_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [block_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [block_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: block_bool_exp
+	): block_aggregate!
+
+	"""
+	fetch data from the table: "block" using primary key columns
+	"""
+	block_by_pk(id: bpchar!): block
+
+	"""
+	fetch data from the table: "call"
+	"""
+	call(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): [call!]!
+
+	"""
+	fetch aggregated fields from the table: "call"
+	"""
+	call_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [call_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [call_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: call_bool_exp
+	): call_aggregate!
+
+	"""
+	fetch data from the table: "call" using primary key columns
+	"""
+	call_by_pk(id: String!): call
+
+	"""
+	fetch data from the table: "event"
+	"""
+	event(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): [event!]!
+
+	"""
+	fetch aggregated fields from the table: "event"
+	"""
+	event_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [event_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [event_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: event_bool_exp
+	): event_aggregate!
+
+	"""
+	fetch data from the table: "event" using primary key columns
+	"""
+	event_by_pk(id: bpchar!): event
+
+	"""
+	fetch data from the table: "extrinsic"
+	"""
+	extrinsic(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [extrinsic_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [extrinsic_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: extrinsic_bool_exp
+	): [extrinsic!]!
+
+	"""
+	fetch aggregated fields from the table: "extrinsic"
+	"""
+	extrinsic_aggregate(
+		"""
+		distinct select on columns
+		"""
+		distinct_on: [extrinsic_select_column!]
+
+		"""
+		limit the number of rows returned
+		"""
+		limit: Int
+
+		"""
+		skip the first n rows. Use only with order_by
+		"""
+		offset: Int
+
+		"""
+		sort the rows by one or more columns
+		"""
+		order_by: [extrinsic_order_by!]
+
+		"""
+		filter the rows returned
+		"""
+		where: extrinsic_bool_exp
+	): extrinsic_aggregate!
+
+	"""
+	fetch data from the table: "extrinsic" using primary key columns
+	"""
+	extrinsic_by_pk(id: bpchar!): extrinsic
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+	_eq: timestamptz
+	_gt: timestamptz
+	_gte: timestamptz
+	_in: [timestamptz!]
+	_is_null: Boolean
+	_lt: timestamptz
+	_lte: timestamptz
+	_neq: timestamptz
+	_nin: [timestamptz!]
+}

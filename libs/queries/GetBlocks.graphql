@@ -1,0 +1,13 @@
+query GetBlocks {
+	block(limit: 20, order_by: { id: desc }) {
+		id
+		hash
+		height
+		parent_hash
+		extrinsics_aggregate {
+			aggregate {
+				count
+			}
+		}
+	}
+}

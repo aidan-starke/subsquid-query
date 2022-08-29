@@ -1,0 +1,11 @@
+query GetExtrinsics {
+	extrinsic(limit: 20, order_by: { id: desc }) {
+		id
+		hash
+		events_aggregate {
+			aggregate {
+				count
+			}
+		}
+	}
+}
