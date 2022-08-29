@@ -6,8 +6,8 @@ import {
 	GetExtrinsicByIdDocument,
 	GetExtrinsicByIdQuery,
 } from "@/libs/api/generated";
-import { Layout } from "@/libs/components";
 import { useTheme } from "@/libs/hooks";
+import { Layout } from "@/libs/components";
 import { fetchData } from "@/libs/utils/prefetch";
 import { Extrinsic as ExtrinsicRow } from "@/libs/components";
 

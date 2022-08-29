@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { graphQLClient } from "@/libs/client";
 import { SetStateAction } from "jotai";
+import { graphQLClient } from "@/libs/client";
 
 export const useAtomPolling = <T>(
 	setAtom: (update: SetStateAction<T>) => void,

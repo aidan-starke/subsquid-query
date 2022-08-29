@@ -1,12 +1,12 @@
 import "@/libs/globals.css";
 import type { AppProps } from "next/app";
-import { QueryClientProvider, Hydrate } from "@tanstack/react-query";
 
-import { queryClient } from "@/libs/client";
 import clsx from "clsx";
-import { ThemeSwitch } from "@/libs/components";
 import Head from "next/head";
 import { useTheme } from "@/libs/hooks";
+import { queryClient } from "@/libs/client";
+import { ThemeSwitch } from "@/libs/components";
+import { QueryClientProvider, Hydrate } from "@tanstack/react-query";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const { isDarkMode } = useTheme();

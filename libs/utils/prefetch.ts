@@ -1,5 +1,5 @@
-import { graphQLClient, queryClient } from "@/libs/client";
 import { fetcher } from "@/libs/api/generated";
+import { graphQLClient, queryClient } from "@/libs/client";
 
 export const prefetch = async (queryKey: string, query: string) =>
 	await queryClient.prefetchQuery([queryKey], fetcher(graphQLClient, query));

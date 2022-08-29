@@ -9,10 +9,10 @@ import {
 	useGetExtrinsicsQuery,
 } from "@/libs/api/generated";
 import { usePolling } from "@/libs/hooks";
-import { Block, ExtrinsicSimple } from "@/libs/components";
 import { queryClient } from "@/libs/client";
-import { dehydrate, DehydratedState, useHydrate } from "@tanstack/react-query";
 import { prefetch } from "@/libs/utils/prefetch";
+import { Block, ExtrinsicSimple } from "@/libs/components";
+import { dehydrate, DehydratedState, useHydrate } from "@tanstack/react-query";
 
 export const getServerSideProps: GetServerSideProps = async () => {
 	await prefetch("GetBlocks", GetBlocksDocument);

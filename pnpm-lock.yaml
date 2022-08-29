@@ -7,6 +7,7 @@ specifiers:
   '@graphql-codegen/typescript-react-query': ^4.0.0
   '@tailwindcss/typography': ^0.5.4
   '@tanstack/react-query': ^4.0.10
+  '@types/lodash': ^4.14.184
   '@types/node': 18.6.3
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -21,6 +22,7 @@ specifiers:
   graphql: ^16.5.0
   graphql-request: ^4.3.0
   jotai: ^1.7.8
+  lodash: ^4.17.21
   next: 12.2.5
   postcss: ^8.4.14
   prettier: ^2.7.1
@@ -40,6 +42,7 @@ dependencies:
   flowbite-react: 0.1.10_pvr5ndjhcjr6r7xrejarh4djbe
   graphql: 16.6.0
   jotai: 1.8.1_ucuhn75irpsvlf3yq3xnib3jky
+  lodash: 4.17.21
   next: 12.2.5_rlaikcoslzwwtqyk7brpdzej5y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -51,6 +54,7 @@ devDependencies:
   '@graphql-codegen/typescript-operations': 2.5.3_graphql@16.6.0
   '@graphql-codegen/typescript-react-query': 4.0.1_graphql@16.6.0
   '@tailwindcss/typography': 0.5.4_tailwindcss@3.1.8
+  '@types/lodash': 4.14.184
   '@types/node': 18.6.3
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
@@ -1838,6 +1842,10 @@ packages:
     resolution: {integrity: sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==}
     dependencies:
       '@types/node': 18.7.13
+    dev: true
+
+  /@types/lodash/4.14.184:
+    resolution: {integrity: sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==}
     dev: true
 
   /@types/node/14.18.26:

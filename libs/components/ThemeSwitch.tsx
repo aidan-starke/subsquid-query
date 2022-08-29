@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { ToggleSwitch } from "flowbite-react";
 import { useTheme } from "@/libs/hooks";
+import { ToggleSwitch } from "flowbite-react";
 
 export const ThemeSwitch: FC = () => {
 	const { currentTheme, toggleTheme } = useTheme();

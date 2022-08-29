@@ -1,9 +1,10 @@
-import { FC, useState } from "react";
-import JSONPretty from "react-json-pretty";
 import clsx from "clsx";
-import { Extrinsic as ExtrinsicInterface } from "@/libs/types";
-import { GetExtrinsicByIdQuery } from "@/libs/api/generated";
+import { camelCase } from "lodash";
 import { useTheme } from "@/libs/hooks";
+import JSONPretty from "react-json-pretty";
+import { FC, useMemo, useState } from "react";
+import { GetExtrinsicByIdQuery } from "@/libs/api/generated";
+import { Extrinsic as ExtrinsicInterface } from "@/libs/types";
 
 interface ExtrinsicProps {
 	extrinsic: ExtrinsicInterface | GetExtrinsicByIdQuery["extrinsic_by_pk"];
@@ -13,6 +14,11 @@ interface ExtrinsicProps {
 export const Extrinsic: FC<ExtrinsicProps> = ({ extrinsic, eventsCount }) => {
 	const [viewArgs, setViewArgs] = useState<boolean>(false);
 	const { isDarkMode } = useTheme();
+
+	const [callSection, callMethod] = useMemo(
+		() => extrinsic?.calls[0].name.split(".") ?? ["", ""],
+		[extrinsic?.calls]
+	);
 
 	return (
 		<>
@@ -33,7 +39,7 @@ export const Extrinsic: FC<ExtrinsicProps> = ({ extrinsic, eventsCount }) => {
 							isDarkMode && "text-gray-300"
 						)}
 					>
-						{extrinsic?.calls[0].name}
+						{camelCase(callSection)}.{camelCase(callMethod)}
 					</p>
 					<button
 						className={clsx(

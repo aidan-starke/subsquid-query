@@ -1,7 +1,7 @@
-import { FC } from "react";
-import { Layout } from "@/libs/components";
 import clsx from "clsx";
+import { FC } from "react";
 import { useTheme } from "@/libs/hooks";
+import { Layout } from "@/libs/components";
 
 interface ExtrinsicSimpleProps {
 	id?: string;
